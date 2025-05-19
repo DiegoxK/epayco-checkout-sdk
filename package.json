@@ -8,7 +8,10 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"*.{js,json,md}\""
   },
   "exports": {
     ".": {
@@ -43,6 +46,13 @@
   },
   "devDependencies": {
     "@types/node": "^22.15.19",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.4.0",
+    "prettier": "^3.5.3",
     "typescript": "^5.8.3"
   }
 }
