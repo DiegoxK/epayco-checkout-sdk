@@ -10,9 +10,37 @@
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "exports": {
+    ".": {
+      "types": "./dist/client/index.d.ts",
+      "require": "./dist/client/index.js"
+    },
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "require": "./dist/client/index.js"
+    },
+    "./server": {
+      "types": "./dist/server/index.d.ts",
+      "require": "./dist/server/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "epayco",
+    "checkout",
+    "payment",
+    "sdk"
+  ],
+  "author": "Diego Suarez",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiegoxK/epayco-checkout-sdk.git"
+  },
   "devDependencies": {
     "@types/node": "^22.15.19",
     "typescript": "^5.8.3"
