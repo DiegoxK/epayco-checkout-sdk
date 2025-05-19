@@ -16,6 +16,6 @@
     "resolveJsonModule": true // Allow importing JSON files
     // Consider adding "moduleResolution": "node" if not default
   },
-  "include": ["src/**/*"], // Which files to include
+  "include": ["src/**/*", "src/server/types"], // Which files to include
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"] // Which files to exclude
 }
