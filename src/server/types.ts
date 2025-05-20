@@ -134,7 +134,7 @@ export interface EpaycoSessionRequestBody {
   extras?: Record<string, string>;
   extrasEpayco?: Record<string, string>;
   billing: EpaycoBillingDetails;
-  checkout_version: "2"; // Use (Crear sessión V2)
+  checkout_version: "2"; // does this even work?
 }
 
 export interface EpaycoFieldError {
