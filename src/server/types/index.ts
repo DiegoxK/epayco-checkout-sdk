@@ -35,9 +35,44 @@ export interface EpaycoSplitReceiver {
 }
 
 export interface EpaycoSplitPayment {
-  type: "percentage" | "fixed"; // Assuming 'fixed' is also an option, someone please check this
+  type: "percentage" | "fixed"; // Assuming 'fixed' is also an option
   receivers: EpaycoSplitReceiver[];
 }
+
+export type EpaycoExtras =
+  | "extra1"
+  | "extra2"
+  | "extra3"
+  | "extra4"
+  | "extra5"
+  | "extra6"
+  | "extra7"
+  | "extra8"
+  | "extra9"
+  | "extra10"
+  | "extra11";
+
+export type EpaycoExtrasEpayco =
+  | "extra1"
+  | "extra2"
+  | "extra3"
+  | "extra4"
+  | "extra5"
+  | "extra6"
+  | "extra7"
+  | "extra8"
+  | "extra9"
+  | "extra10"
+  | "extra11"
+  | "extra12"
+  | "extra13"
+  | "extra14"
+  | "extra15"
+  | "extra16"
+  | "extra17"
+  | "extra18"
+  | "extra19"
+  | "extra20";
 
 // User-provided details for creating a session. https://api.epayco.co/#50550c23-522b-48bc-a8b4-b8aac33fe16f
 export interface EpaycoPaymentDetails {
@@ -70,8 +105,8 @@ export interface EpaycoPaymentDetails {
   taxIco?: number;
   methodsDisable?: string[];
   splitPayment?: EpaycoSplitPayment;
-  extras?: Record<string, string>; // For extra1 to extra11
-  extrasEpayco?: Record<string, string>; // For extra1 to extra20
+  extras?: Partial<Record<EpaycoExtras, string>>; // For extra1 to extra11
+  extrasEpayco?: Partial<Record<EpaycoExtrasEpayco, string>>; // For extra1 to extra20
 }
 
 // The actual request body sent to ePayco for session creation
