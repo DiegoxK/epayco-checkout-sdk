@@ -39,43 +39,25 @@ export interface EpaycoSplitPayment {
   receivers: EpaycoSplitReceiver[];
 }
 
-export type EpaycoExtras =
-  | "extra1"
-  | "extra2"
-  | "extra3"
-  | "extra4"
-  | "extra5"
-  | "extra6"
-  | "extra7"
-  | "extra8"
-  | "extra9"
-  | "extra10"
-  | "extra11";
-
-export type EpaycoExtrasEpayco =
-  | "extra1"
-  | "extra2"
-  | "extra3"
-  | "extra4"
-  | "extra5"
-  | "extra6"
-  | "extra7"
-  | "extra8"
-  | "extra9"
-  | "extra10"
-  | "extra11"
-  | "extra12"
-  | "extra13"
-  | "extra14"
-  | "extra15"
-  | "extra16"
-  | "extra17"
-  | "extra18"
-  | "extra19"
-  | "extra20";
+/* 
+  Extras object for additional fields
+  This is a flexible object to accommodate any extra fields
+  You can later access this extra fields in your confirmation endpoint
+*/
+export interface EpaycoExtras {
+  extra1?: string;
+  extra2?: string;
+  extra3?: string;
+  extra4?: string;
+  extra5?: string;
+  extra6?: string;
+  extra7?: string;
+  extra8?: string;
+  // Seems like you can send up to 10 extras (testing pending)
+}
 
 // User-provided details for creating a session. https://api.epayco.co/#50550c23-522b-48bc-a8b4-b8aac33fe16f
-export interface EpaycoPaymentDetails {
+export interface EpaycoPaymentDetails extends EpaycoExtras {
   // Required transaction info
   name: string; // Name of the product/service
   description: string; // Product/service description
@@ -105,12 +87,10 @@ export interface EpaycoPaymentDetails {
   taxIco?: number;
   methodsDisable?: string[];
   splitPayment?: EpaycoSplitPayment;
-  extras?: Partial<Record<EpaycoExtras, string>>; // For extra1 to extra11
-  extrasEpayco?: Partial<Record<EpaycoExtrasEpayco, string>>; // For extra1 to extra20
 }
 
 // The actual request body sent to ePayco for session creation
-export interface EpaycoSessionRequestBody {
+export interface EpaycoSessionRequestBody extends EpaycoExtras {
   test: string;
   ip: string;
   name: string;
@@ -131,8 +111,6 @@ export interface EpaycoSessionRequestBody {
   response: string;
   confirmation: string;
   splitPayment?: EpaycoSplitPayment;
-  extras?: Record<string, string>;
-  extrasEpayco?: Record<string, string>;
   billing: EpaycoBillingDetails;
   checkout_version: "2"; // does this even work?
 }
