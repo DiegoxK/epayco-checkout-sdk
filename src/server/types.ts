@@ -251,14 +251,13 @@ export interface EpaycoConfirmationData {
   x_3ds_reponse?: string | null;
 }
 
-export interface EpaycoSignatureValidationParams {
-  p_cust_id_cliente: string;
-  p_key: string;
-  x_ref_payco: string;
-  x_transaction_id: string;
-  x_amount: string;
-  x_currency_code: string;
-  received_signature: string;
+export interface EpaycoSignatureConstructionData {
+  p_cust_id_cliente: string; // User's ePayco customer ID (secret)
+  p_key: string; // User's ePayco p_key (secret)
+  x_ref_payco: string; // ePayco's reference number
+  x_transaction_id: string; // ePayco's transaction ID (often same as x_ref_payco)
+  x_amount: string; // Transaction amount (as string)
+  x_currency_code: string; // Currency code (e.g., "COP")
 }
 
 // Fields given in the response of the validation endpoint: https://secure.epayco.co/validation/v1/reference/ + ref_payco
