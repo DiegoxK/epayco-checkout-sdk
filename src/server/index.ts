@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { createHash } from "crypto";
 
 import type {
   EpaycoLoginResponse,
@@ -8,6 +9,7 @@ import type {
   CreateEpaycoSessionConfig,
   EpaycoSessionApiErrorResponse,
   EpaycoExtras,
+  EpaycoSignatureConstructionData,
 } from "./types";
 
 const DEFAULT_EPAYCO_API_BASE_URL = "https://apify.epayco.co"; // User should verify/configure if the api url changes
@@ -257,6 +259,54 @@ export async function createEpaycoSession(
       `ePayco Session Creation Failed: ${(error as Error).message}`
     );
   }
+}
+
+/**
+ * Validates an ePayco signature received on the confirmation URL.
+ *
+ * @param receivedSignature The x_signature string received from ePayco.
+ * @param constructionData An object containing all the necessary fields from the
+ *                         ePayco confirmation data and the merchant's secret credentials
+ *                         (p_cust_id_cliente, p_key) required to reconstruct the signature.
+ * @returns True if the received signature matches the calculated signature, false otherwise.
+ */
+export function validateEpaycoSignature(
+  receivedSignature: string,
+  constructionData: EpaycoSignatureConstructionData
+): boolean {
+  const {
+    p_cust_id_cliente,
+    p_key,
+    x_ref_payco,
+    x_transaction_id,
+    x_amount,
+    x_currency_code,
+  } = constructionData;
+
+  // Basic validation of necessary input parts
+  if (
+    !receivedSignature ||
+    !p_cust_id_cliente ||
+    !p_key ||
+    !x_ref_payco ||
+    !x_transaction_id ||
+    x_amount === undefined ||
+    x_amount === null || // Amount must be present
+    !x_currency_code
+  ) {
+    console.error(
+      "SDK: Missing one or more required parameters for ePayco signature validation (receivedSignature, p_cust_id_cliente, p_key, x_ref_payco, x_transaction_id, x_amount, x_currency_code)."
+    );
+    return false;
+  }
+
+  const signatureString = `${p_cust_id_cliente}^${p_key}^${x_ref_payco}^${x_transaction_id}^${x_amount}^${x_currency_code}`;
+
+  const calculatedSignature = createHash("sha256")
+    .update(signatureString)
+    .digest("hex");
+
+  return calculatedSignature === receivedSignature;
 }
 
 // type exports
