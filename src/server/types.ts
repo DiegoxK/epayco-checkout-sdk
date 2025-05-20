@@ -177,3 +177,155 @@ export interface CreateEpaycoSessionConfig {
 
   epaycoApiBaseUrl?: string; // Base URL e.g., "https://api.secure.epayco.co"
 }
+
+// Confirmation payload send from epayco to your confirmation route
+export interface EpaycoConfirmationData {
+  x_cust_id_cliente: string;
+  x_ref_payco: string;
+  x_id_factura: string;
+  x_id_invoice: string;
+  x_description: string;
+  x_amount: string; // Sent as string, user might parse to number
+  x_amount_country: string;
+  x_amount_ok: string;
+  x_tax: string;
+  x_amount_base: string;
+  x_currency_code: string; // e.g., "COP"
+  x_bank_name: string;
+  x_cardnumber: string; // Masked
+  x_quotas: string; // Number of installments
+  x_respuesta: "Aceptada" | "Rechazada" | "Pendiente" | "Fallida" | string; // Main status
+  x_response: string; // Often same as x_respuesta
+  x_approval_code: string;
+  x_transaction_id: string;
+  x_fecha_transaccion: string; // Date string
+  x_transaction_date: string; // Date string
+  x_cod_respuesta: string; // "1", "2", "3", "4", ... (numeric code as string)
+  x_cod_response: string; // Often same as x_cod_respuesta
+  x_response_reason_text: string;
+  x_errorcode?: string; // Present on success as "00", might be different on error
+  x_cod_transaction_state: string; // "1", "2", "3", ...
+  x_transaction_state:
+    | "Aceptada"
+    | "Rechazada"
+    | "Pendiente"
+    | "Fallida"
+    | string;
+  x_franchise: string;
+  x_business?: string; // Merchant name
+
+  // Customer billing details
+  x_customer_doctype?: string;
+  x_customer_document?: string;
+  x_customer_name?: string;
+  x_customer_lastname?: string;
+  x_customer_email?: string;
+  x_customer_phone?: string;
+  x_customer_movil?: string;
+  x_customer_ind_pais?: string;
+  x_customer_country?: string;
+  x_customer_city?: string;
+  x_customer_address?: string;
+  x_customer_ip: string;
+
+  x_test_request: "TRUE" | "FALSE" | string;
+
+  // Extras
+  x_extra1?: string;
+  x_extra2?: string;
+  x_extra3?: string;
+  x_extra4?: string;
+  x_extra5?: string;
+  x_extra6?: string;
+  x_extra7?: string;
+  x_extra8?: string;
+  x_extra9?: string;
+  x_extra10?: string;
+
+  x_tax_ico?: string;
+  x_payment_date?: string | null;
+  x_signature: string; // THE SIGNATURE TO VALIDATE
+  x_transaction_cycle?: string | null;
+  is_processable?: string; // Appears to be a boolean
+  x_3ds_authentication?: string;
+  x_3ds_reponse?: string | null;
+}
+
+export interface EpaycoSignatureValidationParams {
+  p_cust_id_cliente: string;
+  p_key: string;
+  x_ref_payco: string;
+  x_transaction_id: string;
+  x_amount: string;
+  x_currency_code: string;
+  received_signature: string;
+}
+
+// Fields given in the response of the validation endpoint: https://secure.epayco.co/validation/v1/reference/ + ref_payco
+export interface EpaycoTransactionValidationData {
+  x_cust_id_cliente: number;
+  x_ref_payco: number;
+  x_id_factura: string;
+  x_id_invoice: string;
+  x_description: string;
+  x_mpd_points: number;
+  x_amount: number;
+  x_amount_country: number;
+  x_amount_ok: number;
+  x_tax: number;
+  x_tax_ico: number;
+  x_amount_base: number;
+  x_currency_code: string;
+  x_bank_name: string;
+  x_cardnumber: string;
+  x_quotas: string;
+  x_respuesta: string;
+  x_response: string;
+  x_approval_code: string;
+  x_transaction_id: string;
+  x_fecha_transaccion: string; // ISO datetime string
+  x_transaction_date: string;
+  x_cod_respuesta: number;
+  x_cod_response: number;
+  x_response_reason_text: string;
+  x_cod_transaction_state: number;
+  x_transaction_state: string;
+  x_errorcode: string;
+  x_franchise: string;
+  x_business: string;
+  x_customer_doctype: string;
+  x_customer_document: string;
+  x_customer_name: string;
+  x_customer_lastname: string;
+  x_customer_email: string;
+  x_customer_phone: string;
+  x_customer_movil: string;
+  x_customer_ind_pais: string;
+  x_customer_country: string;
+  x_customer_city: string;
+  x_customer_address: string;
+  x_customer_ip: string;
+  x_signature: string;
+  x_test_request: string;
+  x_transaction_cycle: string | null;
+  x_extra1: string;
+  x_extra2: string;
+  x_extra3: string;
+  x_extra4: string;
+  x_extra5: string;
+  x_extra6: string;
+  x_extra7: string;
+  x_extra8: string;
+  x_extra9: string;
+  x_extra10: string;
+  x_type_payment: string;
+  x_secondary_step: string;
+}
+
+export interface EpaycoValidationApiResponse {
+  success: boolean;
+  title_response: string;
+  text_response: string;
+  last_action: string;
+  data: EpaycoTransactionValidationData;
+}
