@@ -90,6 +90,8 @@ function mapPaymentDetailsToEpaycoRequest(
     lang: String(details.lang).toUpperCase(),
     response: String(details.responseUrl),
     confirmation: String(details.confirmationUrl),
+
+    // Ensure billing details are also stringified
     billing: {
       email: String(details.billing.email),
       name: String(details.billing.name),
@@ -103,7 +105,7 @@ function mapPaymentDetailsToEpaycoRequest(
     },
     checkout_version: "2",
 
-    // Optional fields - ensure their values are also stringified if present
+    // Optional fields - ensures their values are also stringified if present
     ...(details.taxBase !== undefined && { taxBase: String(details.taxBase) }),
     ...(details.tax !== undefined && { tax: String(details.tax) }),
     ...(details.taxIco !== undefined && { taxIco: String(details.taxIco) }),
@@ -127,6 +129,14 @@ function mapPaymentDetailsToEpaycoRequest(
         })),
       },
     }),
+
+    // root-level billing fields
+    nameBilling: String(details.billing.name),
+    emailBilling: String(details.billing.email),
+    addressBilling: String(details.billing.address),
+    typeDocBilling: String(details.billing.typeDoc),
+    numberDocBilling: String(details.billing.numberDoc),
+    mobilephoneBilling: String(details.billing.mobilePhone),
 
     ...(details.extras &&
       Object.keys(details.extras).length > 0 && {
