@@ -53,11 +53,12 @@ export interface EpaycoExtras {
   extra6?: string;
   extra7?: string;
   extra8?: string;
-  // Seems like you can send up to 10 extras (testing pending)
+  extra9?: string;
+  extra10?: string;
 }
 
 // User-provided details for creating a session. https://api.epayco.co/#50550c23-522b-48bc-a8b4-b8aac33fe16f
-export interface EpaycoPaymentDetails extends EpaycoExtras {
+export interface EpaycoPaymentDetails {
   // Required transaction info
   name: string; // Name of the product/service
   description: string; // Product/service description
@@ -73,12 +74,6 @@ export interface EpaycoPaymentDetails extends EpaycoExtras {
 
   // Billing Information (apify docs tell us to send this billing object but it doesnt seems to pick them up for autofilling the checkout information, so we'll also be passing these root-level xxxBilling fields into the endpoint) https://api.epayco.co/#50550c23-522b-48bc-a8b4-b8aac33fe16f
   billing: EpaycoBillingDetails;
-  emailBilling?: string;
-  nameBilling?: string;
-  addressBilling?: string;
-  typeDocBilling?: string;
-  numberDocBilling?: string;
-  mobilephoneBilling?: string;
 
   // Optional fields
   invoice?: string;
@@ -87,6 +82,8 @@ export interface EpaycoPaymentDetails extends EpaycoExtras {
   taxIco?: number;
   methodsDisable?: string[];
   splitPayment?: EpaycoSplitPayment;
+
+  extras?: EpaycoExtras;
 }
 
 // The actual request body sent to ePayco for session creation
@@ -99,20 +96,30 @@ export interface EpaycoSessionRequestBody extends EpaycoExtras {
   amount: string;
   country: string;
   lang: string;
+  response: string;
+  confirmation: string;
+
+  // Nested billing object
+  billing: EpaycoBillingDetails;
+
+  // Root-level
+  nameBilling?: string;
+  emailBilling?: string;
+  addressBilling?: string;
+  typeDocBilling?: string;
+  numberDocBilling?: string;
+  mobilephoneBilling?: string;
+
+  // Other existing optional fields
+  invoice?: string;
   taxBase?: string;
   tax?: string;
   taxIco?: string;
   methodsDisable?: string[];
-  // method?: "POST"; // Seems like a fixed value, maybe not needed
-  // config?: {}; // Empty in example, handle if needed
-  // acepted?: string; // URLs, usually covered by responseUrl
-  // pending?: string; // URLs
-  // rejected?: string; // URLs
-  response: string;
-  confirmation: string;
   splitPayment?: EpaycoSplitPayment;
-  billing: EpaycoBillingDetails;
-  checkout_version: "2"; // does this even work?
+
+  // Version 2 of the api
+  checkout_version: "2";
 }
 
 export interface EpaycoFieldError {
