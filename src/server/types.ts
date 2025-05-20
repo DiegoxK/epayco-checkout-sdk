@@ -14,23 +14,12 @@ export interface EpaycoLoginResponse {
   message?: string;
 }
 
-// Epayco document types obtained from: https://docs.epayco.com/v1/docs/paginas-de-respuestas#tipos-de-documentos
-type EpaycoDocTypes =
-  | "NIT"
-  | "CC"
-  | "CE"
-  | "TI"
-  | "PPN"
-  | "SSN"
-  | "LIC"
-  | "DNI";
-
 // For the billing object in the session creation request
 export interface EpaycoBillingDetails {
   email: string;
   name: string;
   address: string;
-  typeDoc: EpaycoDocTypes;
+  typeDoc: string; //valid doc types: https://docs.epayco.com/v1/docs/paginas-de-respuestas#tipos-de-documentos
   numberDoc: string;
   callingCode?: string; // e.g., "+57"
   mobilePhone: string;
