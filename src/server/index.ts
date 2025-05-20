@@ -7,6 +7,7 @@ import type {
   EpaycoSessionApiResponse,
   CreateEpaycoSessionConfig,
   EpaycoSessionApiErrorResponse,
+  EpaycoExtras,
 } from "./types";
 
 const DEFAULT_EPAYCO_API_BASE_URL = "https://apify.epayco.co"; // User should verify/configure if the api url changes
@@ -90,6 +91,7 @@ function mapPaymentDetailsToEpaycoRequest(
     lang: String(details.lang).toUpperCase(),
     response: String(details.responseUrl),
     confirmation: String(details.confirmationUrl),
+    checkout_version: "2",
 
     // Ensure billing details are also stringified
     billing: {
@@ -103,15 +105,23 @@ function mapPaymentDetailsToEpaycoRequest(
         callingCode: String(details.billing.callingCode),
       }),
     },
-    checkout_version: "2",
+
+    // root-level billing fields
+    nameBilling: String(details.billing.name),
+    emailBilling: String(details.billing.email),
+    addressBilling: String(details.billing.address),
+    typeDocBilling: String(details.billing.typeDoc),
+    numberDocBilling: String(details.billing.numberDoc),
+    mobilephoneBilling: String(details.billing.mobilePhone),
 
     // Optional fields - ensures their values are also stringified if present
+    ...(details.invoice !== undefined && { invoice: String(details.invoice) }),
     ...(details.taxBase !== undefined && { taxBase: String(details.taxBase) }),
     ...(details.tax !== undefined && { tax: String(details.tax) }),
     ...(details.taxIco !== undefined && { taxIco: String(details.taxIco) }),
     ...(details.methodsDisable &&
       details.methodsDisable.length > 0 && {
-        methodsDisable: details.methodsDisable.map((method) => String(method)), // If methods are not already strings
+        methodsDisable: details.methodsDisable.map(String),
       }),
 
     // Split Payment: Amounts and other numbers within splitPayment also need to be strings
@@ -129,34 +139,16 @@ function mapPaymentDetailsToEpaycoRequest(
         })),
       },
     }),
-
-    // root-level billing fields
-    nameBilling: String(details.billing.name),
-    emailBilling: String(details.billing.email),
-    addressBilling: String(details.billing.address),
-    typeDocBilling: String(details.billing.typeDoc),
-    numberDocBilling: String(details.billing.numberDoc),
-    mobilephoneBilling: String(details.billing.mobilePhone),
-
-    ...(details.extras &&
-      Object.keys(details.extras).length > 0 && {
-        extras: Object.fromEntries(
-          Object.entries(details.extras).map(([key, value]) => [
-            key,
-            String(value),
-          ])
-        ),
-      }),
-    ...(details.extrasEpayco &&
-      Object.keys(details.extrasEpayco).length > 0 && {
-        extrasEpayco: Object.fromEntries(
-          Object.entries(details.extrasEpayco).map(([key, value]) => [
-            key,
-            String(value),
-          ])
-        ),
-      }),
   };
+
+  if (details.extras) {
+    for (let i = 1; i <= 10; i++) {
+      const key = `extra${i}` as keyof EpaycoExtras;
+      if (details.extras[key] !== undefined && details.extras[key] !== null) {
+        stringifiedPayload[key] = String(details.extras[key]);
+      }
+    }
+  }
 
   return stringifiedPayload as EpaycoSessionRequestBody;
 }
