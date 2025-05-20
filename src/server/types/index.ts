@@ -51,14 +51,20 @@ export interface EpaycoPaymentDetails {
   ip: string; // User's IP address (Required to be a real public ip, even for testing)
 
   // URLs
-  confirmationUrl: string; // Your backend URL for ePayco to send confirmation
-  responseUrl: string; // Your frontend URL where user is redirected (Localhost doesn't seem to work)
+  confirmationUrl: string; // Your backend URL for ePayco to send confirmation (Must point to an actual domain)
+  responseUrl: string; // Your frontend URL where user is redirected (Must point to an actual domain)
 
-  // Billing Information
+  // Billing Information (apify docs tell us to send this billing object but it doesnt seems to pick them up for autofilling the checkout information, so we'll also be passing these root-level xxxBilling fields into the endpoint) https://api.epayco.co/#50550c23-522b-48bc-a8b4-b8aac33fe16f
   billing: EpaycoBillingDetails;
+  emailBilling?: string;
+  nameBilling?: string;
+  addressBilling?: string;
+  typeDocBilling?: string;
+  numberDocBilling?: string;
+  mobilephoneBilling?: string;
 
   // Optional fields
-  invoice?: string; // Though not explicitly in session body, often useful
+  invoice?: string;
   taxBase?: number;
   tax?: number;
   taxIco?: number;
