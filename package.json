@@ -46,6 +46,10 @@
     "type": "git",
     "url": "git+https://github.com/DiegoxK/epayco-checkout-sdk.git"
   },
+  "bugs": {
+  "url": "https://github.com/DiegoxK/epayco-checkout-sdk/issues"
+  },
+  "homepage": "https://github.com/DiegoxK/epayco-checkout-sdk#readme",
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.19",
