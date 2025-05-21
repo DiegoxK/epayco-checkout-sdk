@@ -1,0 +1,23 @@
+# Test files
+*.test.ts
+*.spec.ts
+jest.config.js
+coverage/
+
+# Config files not needed in the published package
+.eslintignore
+.eslintrc.js
+.prettierrc
+.prettierignore
+tsconfig.json
+# yalc.lock
+# .yalc/
+
+# Local environment files
+.env
+.env.*
+
+# IDE and OS files
+.vscode/
+.idea/
+*.DS_Store
