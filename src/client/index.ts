@@ -2,6 +2,9 @@ import type {
   OpenEpaycoCheckoutParams,
   EpaycoNativeCheckoutHandler,
   EpaycoConfigureOptions,
+  EpaycoCheckoutCreatedData,
+  EpaycoCheckoutResponseData,
+  EpaycoCheckoutCloseData,
 } from "./types";
 
 // --- Global state for script loading ---
@@ -209,3 +212,11 @@ export async function openEpaycoCheckout(
     );
   }
 }
+
+export type {
+  OpenEpaycoCheckoutParams,
+  EpaycoNativeCheckoutHandler,
+  EpaycoCheckoutCreatedData,
+  EpaycoCheckoutResponseData,
+  EpaycoCheckoutCloseData,
+};

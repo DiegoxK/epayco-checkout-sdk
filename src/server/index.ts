@@ -449,8 +449,6 @@ export function validateEpaycoSignature(
   return calculatedSignature === receivedSignature;
 }
 
-// Selective type exports for SDK users.
-// Users will primarily interact with these types when using the SDK.
 export type {
   // Config and input types for creating a session
   CreateEpaycoSessionConfig,
