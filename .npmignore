@@ -10,8 +10,8 @@ coverage/
 .prettierrc
 .prettierignore
 tsconfig.json
-# yalc.lock
-# .yalc/
+yalc.lock
+.yalc/
 
 # Local environment files
 .env
