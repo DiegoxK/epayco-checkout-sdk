@@ -1,6 +1,6 @@
 {
   "name": "epayco-checkout-community-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A client and server SDK for ePayco checkout.",
   "main": "./dist/client/index.js",
   "types": "./dist/client/index.d.ts",
@@ -50,7 +50,7 @@
     "url": "git+https://github.com/DiegoxK/epayco-checkout-sdk.git"
   },
   "bugs": {
-  "url": "https://github.com/DiegoxK/epayco-checkout-sdk/issues"
+    "url": "https://github.com/DiegoxK/epayco-checkout-sdk/issues"
   },
   "homepage": "https://github.com/DiegoxK/epayco-checkout-sdk#readme",
   "devDependencies": {
