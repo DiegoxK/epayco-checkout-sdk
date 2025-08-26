@@ -1,5 +1,5 @@
 {
-  "name": "epayco-checkout-sdk",
+  "name": "epayco-checkout-community-sdk",
   "version": "1.0.0",
   "description": "A client and server SDK for ePayco checkout.",
   "main": "./dist/client/index.js",

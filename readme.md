@@ -1,6 +1,6 @@
-# ePayco Checkout SDK
+# ePayco Checkout Community SDK
 
-[![npm version](https://badge.fury.io/js/epayco-checkout-sdk.svg)](https://badge.fury.io/js/epayco-checkout-sdk)
+[![npm version](https://badge.fury.io/js/epayco-checkout-community-sdk.svg)](https://badge.fury.io/js/epayco-checkout-community-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A client and server SDK for Node.js and browser environments designed to simplify the integration of ePayco's **checkout process**. This SDK handles session creation, client-side checkout invocation, and provides helpers for validating ePayco's confirmation webhook signatures.
@@ -19,10 +19,10 @@ For other ePayco services (Customers, Plans, Subscriptions, PSE, Cash payments, 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [The ePayco Checkout Flow: An Overview](#the-epayco-checkout-flow-an-overview)
-- [Server-Side Usage (`epayco-checkout-sdk/server`)](#server-side-usage-epayco-checkout-sdkserver)
+- [Server-Side Usage (`epayco-checkout-community-sdk/server`)](#server-side-usage-epayco-checkout-community-sdkserver)
   - [A. Creating a Payment Session (`createEpaycoSession`)](#a-creating-a-payment-session-createepaycosession)
   - [B. Handling the Confirmation Webhook (`validateEpaycoSignature`)](#b-handling-the-confirmation-webhook-validateepaycosignature)
-- [Client-Side Usage (`epayco-checkout-sdk`)](#client-side-usage-epayco-checkout-sdk)
+- [Client-Side Usage (`epayco-checkout-community-sdk`)](#client-side-usage-epayco-checkout-community-sdk)
   - [A. Opening the ePayco Checkout (`openEpaycoCheckout`)](#a-opening-the-epayco-checkout-openepaycocheckout)
   - [B. Using Client-Side Event Handlers](#b-using-client-side-event-handlers)
 - [Your Responsibility: Implementing the `responseUrl` Page](#your-responsibility-implementing-the-responseurl-page)
@@ -52,11 +52,11 @@ For other ePayco services (Customers, Plans, Subscriptions, PSE, Cash payments, 
 ## Installation
 
 ```bash
-npm install epayco-checkout-sdk
+npm install epayco-checkout-community-sdk
 # or
-yarn add epayco-checkout-sdk
+yarn add epayco-checkout-community-sdk
 # or
-pnpm add epayco-checkout-sdk
+pnpm add epayco-checkout-community-sdk
 ```
 
 ## The ePayco Checkout Flow: An Overview
@@ -70,7 +70,7 @@ Integrating ePayco's checkout involves several steps. This SDK assists with step
 5.  **User Redirect (`responseUrl` - You Implement):** After the payment attempt, ePayco redirects the user's browser to your `responseUrl`. Your application's page at this URL is responsible for providing immediate feedback to the user by validating the transaction status with ePayco.
 6.  **Webhook Confirmation (`confirmationUrl` - You Implement):** ePayco sends a server-to-server request to your `confirmationUrl`. This is the **authoritative confirmation** of the transaction's status. Your backend endpoint must validate the request's signature using `validateEpaycoSignature` and then securely process the order.
 
-## Server-Side Usage (`epayco-checkout-sdk/server`)
+## Server-Side Usage (`epayco-checkout-community-sdk/server`)
 
 ### A. Creating a Payment Session (`createEpaycoSession`)
 
@@ -84,7 +84,7 @@ import {
   createEpaycoSession,
   type EpaycoPaymentDetails,
   type CreateEpaycoSessionConfig,
-} from "epayco-checkout-sdk/server";
+} from "epayco-checkout-community-sdk/server";
 
 export async function POST(req: Request) {
   try {
@@ -151,7 +151,7 @@ import {
   validateEpaycoSignature,
   type EpaycoConfirmationData,
   type EpaycoSignatureConstructionData,
-} from "epayco-checkout-sdk/server";
+} from "epayco-checkout-community-sdk/server";
 import type { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -203,7 +203,7 @@ export async function POST(req: NextRequest) {
 }
 ```
 
-## Client-Side Usage (`epayco-checkout-sdk`)
+## Client-Side Usage (`epayco-checkout-community-sdk`)
 
 Use this part of the SDK in your frontend to display the checkout.
 
@@ -213,7 +213,7 @@ Use this part of the SDK in your frontend to display the checkout.
 import {
   openEpaycoCheckout,
   type OpenEpaycoCheckoutParams,
-} from "epayco-checkout-sdk";
+} from "epayco-checkout-community-sdk";
 
 // Example in a React component
 async function handlePayment() {
@@ -283,7 +283,7 @@ After the payment attempt, the user is redirected to your `responseUrl`. This pa
 // Conceptual example for a Next.js page at `/checkout/response`
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import type { EpaycoValidationApiResponse } from 'epayco-checkout-sdk/server';
+import type { EpaycoValidationApiResponse } from 'epayco-checkout-community-sdk/server';
 
 export default function CheckoutResponsePage() {
   const searchParams = useSearchParams();
@@ -333,7 +333,7 @@ export default function CheckoutResponsePage() {
 
 This SDK exports several TypeScript types to help with your integration.
 
-**Server-Side (`epayco-checkout-sdk/server`):**
+**Server-Side (`epayco-checkout-community-sdk/server`):**
 
 - `CreateEpaycoSessionConfig`: Configuration for `createEpaycoSession`.
 - `EpaycoPaymentDetails`: Input details for a payment session.
@@ -341,7 +341,7 @@ This SDK exports several TypeScript types to help with your integration.
 - `EpaycoSignatureConstructionData`: Input for `validateEpaycoSignature`.
 - `EpaycoValidationApiResponse`: Type for ePayco's transaction validation endpoint response.
 
-**Client-Side (`epayco-checkout-sdk`):**
+**Client-Side (`epayco-checkout-community-sdk`):**
 
 - `OpenEpaycoCheckoutParams`: Input for `openEpaycoCheckout`.
 - `EpaycoNativeCheckoutHandler`: The handler object returned by `openEpaycoCheckout`.
