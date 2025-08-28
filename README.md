@@ -5,6 +5,8 @@
 
 A client and server SDK for Node.js and browser environments designed to simplify the integration of ePayco's **checkout process**. This SDK handles session creation, client-side checkout invocation, and provides helpers for validating ePayco's confirmation webhook signatures.
 
+<img width="1360" height="768" alt="{41DB9C52-0316-43A6-8B32-904E04D56D6E}" src="https://github.com/user-attachments/assets/fe0e02bc-3c0f-4f1f-af3e-ac2ed61a2a95" />
+
 ### Disclaimer
 
 This is a community-driven SDK and is **not officially affiliated with, endorsed by, or supported by ePayco**. It was initially developed for personal use and has been expanded based on direct testing and "reverse engineering" of ePayco's APIs, as the official documentation for the V2 checkout session flow was found to be inconsistent or lacking in certain areas.
